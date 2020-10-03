@@ -1,8 +1,6 @@
 package main
 
 import (
-	"ScrapperMinLib"
-	"archive/zip"
 	"io"
 	"os"
 	"path/filepath"
@@ -69,62 +67,7 @@ func PopulateOutput(lines []string) {
 }
 
 func Download() {
-	prog := dialog.NewProgressInfinite("Downloading", "Please wait...", w)
-
-	go func() {
-
-		bundlezip := "bundle.zip"
-		sm := ScrapperMinLib.InitSM()
-
-		f := &File2{}
-		d := &Directory{}
-
-		os.Remove(bundlezip)
-		if f.Exists(bundlezip) == false {
-			sm.WC.MethodDownloadFileForm("https://github.com/sorainnosia/4DPredictorGo/raw/main/4DSource/bundle.zip", "GET", "", bundlezip, "", "")
-		}
-		if d.Exists(ds.GetDataSourcePath()) == false {
-			d.CreateDirectory(ds.GetDataSourcePath())
-		}
-		r, err := zip.OpenReader(bundlezip)
-		if err != nil {
-			return
-		}
-		defer r.Close()
-
-		for _, fz := range r.File {
-			fpath := filepath.Join(ds.GetDataSourcePath(), fz.Name)
-
-			if f.Exists(fpath) {
-				continue
-			}
-
-			outFile, err := os.OpenFile(fpath, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, fz.Mode())
-			if err != nil {
-				continue
-			}
-			defer outFile.Close()
-
-			rc, err := fz.Open()
-			if err != nil {
-				continue
-			}
-
-			_, err = io.Copy(outFile, rc)
-
-			if err != nil {
-				continue
-			}
-			defer rc.Close()
-		}
-
-		sm.Multiple(FourDDownload, []string{"4DSource"})
-		RefreshDataSet()
-
-		prog.Hide()
-	}()
-
-	prog.Show()
+	
 }
 
 func InfoScreen(a fyne.App) fyne.CanvasObject {
