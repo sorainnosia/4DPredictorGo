@@ -6,4 +6,4 @@ It is a game on every Wednesday, Saturday and Sunday. Winner guess 4 digit and i
 
 This software allows people to analyse past 4D numbers by using different algorithm
 
-![Image of 4DAnalysis running on Windows](https://i.imgur.com/kyriSrE.png)
+![4DAnalysis running on Windows](https://i.imgur.com/bUlDqGN.png)
